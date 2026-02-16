@@ -247,6 +247,24 @@
       font-size: 13px;
       border-radius: 10px;
     }
+    /* ===== Make dropdown choices readable ===== */
+  select {
+    color: var(--input-text);
+    background: var(--input-bg);
+  }
+
+  /* Options in the opened dropdown */
+  select option {
+    background: #ffffff;   /* white */
+    color: #000000;        /* black text */
+  }
+
+  /* Highlighted / selected option (supported in most modern browsers) */
+  select option:checked,
+   select option:hover {
+    background: #2f2f2f;   /* dark grey highlight */
+    color: #ffffff;        /* white text */
+  }
   </style>
 </head>
 
