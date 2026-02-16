@@ -34,9 +34,29 @@
     }
     .small { font-size: 12px; opacity: .9; }
     @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+    /* ===== Return Link ===== */
+  .return-link {
+    text-align: center;
+    margin: 15px 0 5px 0;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  .return-link a {
+    color: #d4af37;            /* Gold */
+    text-decoration: underline;
+    font-size: 16px;
+    transition: 0.2s ease;
+  }
+
+  .return-link a:hover {
+    color: #e6c768;            /* Lighter gold hover */
+  }
   </style>
 </head>
 <body>
+  <div class="return-link">
+  <a href="index.html">← Return to Main Page</a>
+  </div>
   <div class="wrap">
     <div class="card">
       <h1>THE SMALL BUSINESS FUND · BBCode Generator</h1>
