@@ -4,59 +4,218 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Small Business Fund BBCode Generator</title>
+
   <style>
-    :root { color-scheme: light; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background:#f6f7fb; color:#111; }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 20px; }
-    .card { background:#fff; border-radius: 16px; padding: 18px; box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-    h1 { font-size: 18px; margin: 0 0 14px; }
-    .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .full { grid-column: 1 / -1; }
-    label { display:block; font-size: 12px; margin: 0 0 6px; color:#333; }
-    input, textarea, select {
-      width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #d7dbe7; border-radius: 10px;
-      background:#fff; font-size: 14px;
-    }
-    textarea { min-height: 110px; resize: vertical; }
-    .row { display:flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-    button {
-      border: 0; border-radius: 12px; padding: 10px 14px; font-weight: 600; cursor: pointer;
-      background:#2b6cb0; color:#fff;
-    }
-    button.secondary { background:#4a5568; }
-    button.ghost { background:#edf2f7; color:#111; }
-    .note { font-size: 12px; color:#555; margin-top: 8px; }
-    .out { margin-top: 14px; }
-    pre {
-      white-space: pre-wrap; word-break: break-word;
-      background:#0b1020; color:#e7e9ff; border-radius: 14px; padding: 14px; overflow:auto;
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .small { font-size: 12px; opacity: .9; }
-    @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
-    /* ===== Return Link ===== */
-  .return-link {
-    text-align: center;
-    margin: 15px 0 5px 0;
-    font-family: Georgia, "Times New Roman", serif;
-  }
+    /* ===== Match Index Theme ===== */
+    :root{
+      --bg-color: #0f1419;
+      --gold: #d4af37;
+      --gold-soft: #e6c768;
 
-  .return-link a {
-    color: #d4af37;            /* Gold */
-    text-decoration: underline;
-    font-size: 16px;
-    transition: 0.2s ease;
-  }
+      --panel: rgba(255,255,255,0.04);
+      --panel-border: rgba(212,175,55,0.35);
 
-  .return-link a:hover {
-    color: #e6c768;            /* Lighter gold hover */
-  }
+      --input-bg: rgba(255,255,255,0.06);
+      --input-border: rgba(212,175,55,0.35);
+      --input-text: #f3f3f3;
+      --muted: rgba(212,175,55,0.80);
+    }
+
+    body{
+      margin:0;
+      background: var(--bg-color);
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      text-align: center;
+    }
+
+    /* ===== Top Banner ===== */
+    .banner{
+      width: 100%;
+      text-align: center;
+      background-color: var(--bg-color);
+      padding-top: 10px;
+    }
+
+    .banner a{
+      display: inline-block;
+    }
+
+    .banner img{
+      max-width: 100%;
+      height: auto;
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
+
+    .banner img:hover{
+      filter: brightness(1.08);
+      transform: scale(1.01);
+    }
+
+    /* ===== Return link ===== */
+    .return-link{
+      text-align:center;
+      margin: 14px 0 6px;
+    }
+    .return-link a{
+      color: var(--gold);
+      text-decoration: underline;
+      font-size: 16px;
+      transition: 0.2s ease;
+    }
+    .return-link a:hover{ color: var(--gold-soft); }
+
+    /* ===== Layout ===== */
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 14px 20px 30px;
+      text-align: left;
+    }
+
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      backdrop-filter: blur(6px);
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 6px 0 14px;
+      letter-spacing: 0.8px;
+      text-align: center;
+      color: var(--gold);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .full{ grid-column: 1 / -1; }
+
+    label{
+      display:block;
+      font-size: 12px;
+      margin: 0 0 6px;
+      color: var(--muted);
+      letter-spacing: 0.4px;
+    }
+
+    input, textarea, select{
+      width:100%;
+      box-sizing:border-box;
+      padding:10px 12px;
+      border:1px solid var(--input-border);
+      border-radius: 10px;
+      background: var(--input-bg);
+      color: var(--input-text);
+      font-size: 14px;
+      outline: none;
+    }
+
+    input::placeholder, textarea::placeholder{ color: rgba(255,255,255,0.45); }
+    input:focus, textarea:focus, select:focus{
+      border-color: var(--gold-soft);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+    }
+
+    textarea{ min-height: 110px; resize: vertical; }
+
+    .row{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      justify-content: center;
+    }
+
+    button{
+      border: 1px solid rgba(0,0,0,0.0);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--gold);
+      color: #1b1b1b;
+      transition: 0.2s ease;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    button:hover{
+      background: var(--gold-soft);
+      transform: scale(1.02);
+    }
+
+    button.secondary{
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--panel-border);
+    }
+    button.secondary:hover{
+      border-color: var(--gold-soft);
+      background: rgba(212,175,55,0.08);
+      transform: scale(1.02);
+    }
+
+    button.ghost{
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--panel-border);
+      text-decoration: underline;
+    }
+    button.ghost:hover{
+      border-color: var(--gold-soft);
+      background: rgba(212,175,55,0.08);
+      transform: scale(1.02);
+    }
+
+    .note{
+      font-size: 12px;
+      color: rgba(212,175,55,0.85);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .out{ margin-top: 14px; }
+
+    pre{
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(0,0,0,0.40);
+      color: #f3f3f3;
+      border-radius: 14px;
+      padding: 14px;
+      overflow:auto;
+      border: 1px solid rgba(212,175,55,0.25);
+    }
+
+    .small{ font-size: 12px; opacity: .95; }
+
+    @media (max-width: 820px){
+      .grid{ grid-template-columns: 1fr; }
+      .wrap{ padding-left: 14px; padding-right: 14px; }
+    }
   </style>
 </head>
+
 <body>
-  <div class="return-link">
-  <a href="index.html">← Return to Main Page</a>
+  <!-- ===== Clickable Top Banner ===== -->
+  <div class="banner">
+    <a href="index.html">
+      <img src="https://i.ibb.co/PSMfsZQ/Banner-wide.png" alt="Main Banner">
+    </a>
   </div>
+
+  <!-- ===== Return Link ===== -->
+  <div class="return-link">
+    <a href="index.html">← Return to Main Page</a>
+  </div>
+
   <div class="wrap">
     <div class="card">
       <h1>THE SMALL BUSINESS FUND · BBCode Generator</h1>
@@ -84,6 +243,7 @@
           <label>1.5 Routing Number (business preferred)</label>
           <input id="routing" placeholder="Routing number" />
         </div>
+
         <div>
           <label>1.6 Employees</label>
           <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px;">
@@ -106,6 +266,7 @@
             <option value="NO">NO</option>
           </select>
         </div>
+
         <div>
           <label>Full Name (for acknowledgement)</label>
           <input id="fullName" placeholder="e.g., Tom Hardy" />
@@ -118,10 +279,11 @@
       </div>
 
       <div class="row">
-        <button id="generateBtn">Generate</button>
+        <button id="generateBtn" type="button">Generate</button>
         <button class="ghost" id="copyBtn" type="button">Copy output</button>
         <button class="secondary" id="resetBtn" type="button">Reset</button>
       </div>
+
       <div class="note">Tip: Fill only what you want. Empty fields will stay blank in the BBCode.</div>
 
       <div class="out">
@@ -159,7 +321,6 @@
   const $ = (id) => document.getElementById(id);
 
   function esc(s) {
-    // BBCode is tolerant, but we avoid accidental template token injection.
     return String(s ?? "").replaceAll("{{", "{ {").replaceAll("}}", "} }");
   }
 
@@ -178,10 +339,7 @@
     };
 
     let out = tpl;
-    for (const [k, v] of Object.entries(data)) {
-      out = out.replaceAll(`{{${k}}}`, v);
-    }
-
+    for (const [k, v] of Object.entries(data)) out = out.replaceAll(`{{${k}}}`, v);
     $("output").textContent = out;
   }
 
@@ -192,7 +350,6 @@
       await navigator.clipboard.writeText(text);
       alert("Copied ✅");
     } catch (e) {
-      // fallback
       const ta = document.createElement("textarea");
       ta.value = text;
       document.body.appendChild(ta);
@@ -213,7 +370,6 @@
   $("copyBtn").addEventListener("click", copyOutput);
   $("resetBtn").addEventListener("click", resetAll);
 
-  // Generate once on load so you see the skeleton immediately:
   generate();
 </script>
 </body>
