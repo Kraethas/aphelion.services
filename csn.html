@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Charity Supplementary Notification · BBCode Generator</title>
+
+  <style>
+    /* ===== Match Index Theme ===== */
+    :root{
+      --bg-color: #0f1419;
+      --gold: #d4af37;
+      --gold-soft: #e6c768;
+
+      --panel: rgba(255,255,255,0.04);
+      --panel-border: rgba(212,175,55,0.35);
+
+      --input-bg: rgba(255,255,255,0.06);
+      --input-border: rgba(212,175,55,0.35);
+      --input-text: #f3f3f3;
+      --muted: rgba(212,175,55,0.80);
+    }
+
+    body{
+      margin:0;
+      background: var(--bg-color);
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      text-align: center;
+    }
+
+    /* ===== Top Banner ===== */
+    .banner{
+      width: 100%;
+      text-align: center;
+      background-color: var(--bg-color);
+      padding-top: 10px;
+    }
+    .banner a{ display: inline-block; }
+    .banner img{
+      max-width: 100%;
+      height: auto;
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
+    .banner img:hover{
+      filter: brightness(1.08);
+      transform: scale(1.01);
+    }
+
+    /* ===== Return link ===== */
+    .return-link{
+      text-align:center;
+      margin: 14px 0 6px;
+    }
+    .return-link a{
+      color: var(--gold);
+      text-decoration: underline;
+      font-size: 16px;
+      transition: 0.2s ease;
+    }
+    .return-link a:hover{ color: var(--gold-soft); }
+
+    /* ===== Layout ===== */
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 14px 20px 30px;
+      text-align: left;
+    }
+
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      backdrop-filter: blur(6px);
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 6px 0 14px;
+      letter-spacing: 0.8px;
+      text-align: center;
+      color: var(--gold);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .full{ grid-column: 1 / -1; }
+
+    label{
+      display:block;
+      font-size: 12px;
+      margin: 0 0 6px;
+      color: var(--muted);
+      letter-spacing: 0.4px;
+    }
+
+    input, textarea, select{
+      width:100%;
+      box-sizing:border-box;
+      padding:10px 12px;
+      border:1px solid var(--input-border);
+      border-radius: 10px;
+      background: var(--input-bg);
+      color: var(--input-text);
+      font-size: 14px;
+      outline: none;
+    }
+
+    input::placeholder, textarea::placeholder{ color: rgba(255,255,255,0.45); }
+    input:focus, textarea:focus, select:focus{
+      border-color: var(--gold-soft);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+    }
+
+    textarea{ min-height: 110px; resize: vertical; }
+
+    /* ===== Make dropdown choices readable ===== */
+    select option{
+      background: #ffffff;
+      color: #000000;
+    }
+    select option:checked,
+    select option:hover{
+      background: #2f2f2f;
+      color: #ffffff;
+    }
+
+    .row{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      justify-content: center;
+    }
+
+    button{
+      border: 1px solid rgba(0,0,0,0.0);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--gold);
+      color: #1b1b1b;
+      transition: 0.2s ease;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    button:hover{
+      background: var(--gold-soft);
+      transform: scale(1.02);
+    }
+
+    button.secondary{
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--panel-border);
+    }
+    button.secondary:hover{
+      border-color: var(--gold-soft);
+      background: rgba(212,175,55,0.08);
+      transform: scale(1.02);
+    }
+
+    button.ghost{
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--panel-border);
+      text-decoration: underline;
+    }
+    button.ghost:hover{
+      border-color: var(--gold-soft);
+      background: rgba(212,175,55,0.08);
+      transform: scale(1.02);
+    }
+
+    .note{
+      font-size: 12px;
+      color: rgba(212,175,55,0.85);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .out{ margin-top: 14px; }
+
+    pre{
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(0,0,0,0.40);
+      color: #f3f3f3;
+      border-radius: 14px;
+      padding: 14px;
+      overflow:auto;
+      border: 1px solid rgba(212,175,55,0.25);
+    }
+
+    @media (max-width: 820px){
+      .grid{ grid-template-columns: 1fr; }
+      .wrap{ padding-left: 14px; padding-right: 14px; }
+    }
+
+    /* ===== Trustees UI (Dynamic) ===== */
+    .trustees-header{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .trustees-list{
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .trustee-card{
+      border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(0,0,0,0.16);
+    }
+
+    .trustee-top{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .trustee-title{
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.4px;
+    }
+
+    .trustee-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 820px){
+      .trustee-grid{ grid-template-columns: 1fr; }
+    }
+
+    .mini{
+      padding: 8px 10px;
+      font-size: 13px;
+      border-radius: 10px;
+    }
+
+    /* ===== Checkbox list for updates ===== */
+    .checks{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    @media (max-width: 820px){
+      .checks{ grid-template-columns: 1fr; }
+    }
+    .check-item{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      border: 1px solid rgba(212,175,55,0.18);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: rgba(0,0,0,0.12);
+    }
+    .check-item input{
+      width: 18px;
+      height: 18px;
+      accent-color: var(--gold);
+    }
+    .check-item span{
+      color: rgba(212,175,55,0.9);
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== Clickable Top Banner ===== -->
+  <div class="banner">
+    <a href="index.html">
+      <img src="https://i.ibb.co/PSMfsZQ/Banner-wide.png" alt="Main Banner">
+    </a>
+  </div>
+
+  <!-- ===== Return Link ===== -->
+  <div class="return-link">
+    <a href="index.html">← Return to Main Page</a>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <h1>CHARITY SUPPLEMENTARY NOTIFICATION · BBCode Generator</h1>
+
+      <div class="grid">
+        <!-- I. Applicant Information -->
+        <div>
+          <label>1.1 Title</label>
+          <select id="title">
+            <option value="">Select…</option>
+            <option value="Mr.">Mr.</option>
+            <option value="Mrs.">Mrs.</option>
+            <option value="Miss.">Miss.</option>
+            <option value="Dr.">Dr.</option>
+            <option value="Ms.">Ms.</option>
+          </select>
+        </div>
+
+        <div>
+          <label>1.2 Full Name</label>
+          <input id="applicantFullName" placeholder="Answer" />
+        </div>
+
+        <div>
+          <label>1.3 Date of Birth (DD/MMM/YYYY)</label>
+          <input id="dob" placeholder="DD/MMM/YYYY" />
+        </div>
+
+        <div>
+          <label>1.4 Phone Number</label>
+          <input id="phone" placeholder="Answer" />
+        </div>
+
+        <div class="full">
+          <label>1.5 Residential Address</label>
+          <input id="address" placeholder="Answer" />
+        </div>
+
+        <div class="full">
+          <label>1.6 GTAW Forum Name</label>
+          <input id="forumName" placeholder="Answer" />
+        </div>
+
+        <!-- II. Charity Information -->
+        <div class="full">
+          <label>2.1 Charity Name</label>
+          <input id="charityName" placeholder="Answer" />
+        </div>
+
+        <div class="full">
+          <label>2.2 Charity ID</label>
+          <input id="charityId" placeholder="Answer" />
+        </div>
+
+        <!-- III. Updated Information -->
+        <div class="full">
+          <label>3.1 Which information would you like to update?</label>
+          <div class="checks">
+            <label class="check-item"><input type="checkbox" id="updPersonal"><span>Personal Information</span></label>
+            <label class="check-item"><input type="checkbox" id="updStatus"><span>Charity Status (Active, Defunct)</span></label>
+            <label class="check-item"><input type="checkbox" id="updName"><span>Charity Name</span></label>
+            <label class="check-item"><input type="checkbox" id="updAddress"><span>Charity Address</span></label>
+            <label class="check-item"><input type="checkbox" id="updTrustees"><span>Trustees Information</span></label>
+          </div>
+          <div class="note">These will be marked with “X” inside the forum BBCode checkboxes.</div>
+        </div>
+
+        <div class="full">
+          <label>3.1.1 Please provide the new details here</label>
+          <textarea id="newDetails" placeholder="Answer"></textarea>
+        </div>
+
+        <!-- Trustees (Dynamic, only if updating trustees, but still available) -->
+        <div class="full">
+          <label>Trustees (use if you’re updating Trustee information)</label>
+          <div class="trustees-header">
+            <div class="trustee-title">Add trustee rows as needed.</div>
+            <button class="secondary mini" id="addTrusteeBtn" type="button">+ Add Trustee</button>
+          </div>
+          <div id="trusteesList" class="trustees-list"></div>
+          <div class="note">Optional: leave empty if not updating trustees.</div>
+        </div>
+
+        <!-- IV. Additional -->
+        <div class="full">
+          <label>4.1 Anything else you would like to add?</label>
+          <textarea id="additional" placeholder="Answer"></textarea>
+        </div>
+
+        <!-- Acknowledgement -->
+        <div class="full">
+          <label>Full Name (for acknowledgement)</label>
+          <input id="ackFullName" placeholder="Full Name" />
+        </div>
+      </div>
+
+      <div class="row">
+        <button id="generateBtn" type="button">Generate</button>
+        <button class="ghost" id="copyBtn" type="button">Copy output</button>
+        <button class="secondary" id="resetBtn" type="button">Reset</button>
+      </div>
+
+      <div class="out">
+        <label>Output BBCode</label>
+        <pre id="output"></pre>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const tpl = `[center][img]https://i.imgur.com/G9QefZk.png[/img][/center][br][/br][divbox=transparent][center][b][size=250][color=#535a6c]CHARITY SUPPLEMENTARY NOTIFICATION[/color][/size][/b]
+[/divbox]
+[br][/br][color=#535a6c][size=150][b]I. APPLICANT INFORMATION[/b][/size][/color][hr][/hr]
+
+[list=none][*][b]1.1 Title: [/b] {{TITLE}}
+[hr][/hr]
+[*][b]1.2 Full Name: [/b] {{APPLICANT_FULL_NAME}}
+[hr][/hr]
+[b]1.3 Date of Birth: [/b] {{DOB}}
+[hr][/hr]
+[b]1.4 Phone Number: [/b] {{PHONE}}
+[hr][/hr]
+[b]1.5 Residential Address: [/b] {{ADDRESS}}
+[hr][/hr]
+[b]1.6 ((GTAW Forum Name)): [/b] {{FORUM_NAME}}
+[hr][/hr][/list]
+
+[br][/br][color=#535a6c][size=150][b]II. CHARITY INFORMATION[/b][/size][/color][hr][/hr]
+
+[list=none][*] [b]2.1 Charity Name: [/b] {{CHARITY_NAME}}
+[hr][/hr]
+[*] [b]2.2 Charity  ID: [/b]  {{CHARITY_ID}}
+[hr][/hr]
+[/list]
+
+[br][/br][color=#535a6c][size=150][b]III.  UPDATED INFORMATION[/b][/size][/color][hr][/hr]
+ [list=none][i]Mark with [cbc] where applicable.[/i][br][/br]
+[b]3.1 Which of the following information would you like to update?[/b]
+[cb] {{UPD_PERSONAL}}
+[cb] {{UPD_STATUS}}
+[cb] {{UPD_NAME}}
+[cb] {{UPD_ADDRESS}}
+[cb] {{UPD_TRUSTEES}}
+[hr][/hr]
+[b]3.1.1 Please provide the new details here:[/b]
+{{NEW_DETAILS}}
+[hr][/hr]
+{{TRUSTEE_SECTION}}
+[/list]
+[br][/br][color=#535a6c][size=150][b]IV. ADDITIONAL INFORMATION[/b][/size][/color][hr][/hr][list=none]
+[b]4.1 Anything else you would like to add? [/b]  
+[hr][/hr]{{ADDITIONAL}}[/list]
+
+[br][/br][br][/br][accordionfixed=1;ACKNOWLEDGEMENT & AUTHORIZATION]
+[br][/br][justify]By submitting this application, I, [b]{{ACK_FULL_NAME}}[/b], hereby certify that all questions contained in this document were met with truthful statements. I fully authorize the investigation of any content shared on this document. I am aware that lying, omitting, plagiarizing, or maliciously adulterating this application will result in immediate denial and an indefinite ban from applying in the future for business registrations.[/justify]
+[br][/br][/accordionfixed]`;
+
+  const $ = (id) => document.getElementById(id);
+
+  function esc(s) {
+    return String(s ?? "").replaceAll("{{", "{ {").replaceAll("}}", "} }");
+  }
+
+  function markBox(selected) {
+    return selected ? "X" : "";
+  }
+
+  // ===== Dynamic Trustees =====
+  let trustees = [];
+
+  function newTrustee() {
+    return { name: "", dob: "", phone: "" };
+  }
+
+  function renderTrustees() {
+    const host = $("trusteesList");
+    host.innerHTML = "";
+
+    trustees.forEach((t, idx) => {
+      const card = document.createElement("div");
+      card.className = "trustee-card";
+
+      const top = document.createElement("div");
+      top.className = "trustee-top";
+
+      const title = document.createElement("div");
+      title.className = "trustee-title";
+      title.textContent = `Trustee #${idx + 1}`;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.className = "ghost mini";
+      removeBtn.type = "button";
+      removeBtn.textContent = "Remove";
+      removeBtn.addEventListener("click", () => {
+        trustees.splice(idx, 1);
+        if (trustees.length === 0) trustees.push(newTrustee());
+        renderTrustees();
+      });
+
+      top.appendChild(title);
+      top.appendChild(removeBtn);
+
+      const grid = document.createElement("div");
+      grid.className = "trustee-grid";
+
+      function mkField(labelText, placeholder, value, onInput) {
+        const wrap = document.createElement("div");
+        const lab = document.createElement("label");
+        lab.textContent = labelText;
+        const inp = document.createElement("input");
+        inp.placeholder = placeholder;
+        inp.value = value;
+        inp.addEventListener("input", onInput);
+        wrap.appendChild(lab);
+        wrap.appendChild(inp);
+        return wrap;
+      }
+
+      grid.appendChild(mkField("Full Name", "Answer", t.name, (e)=>{ trustees[idx].name = e.target.value; }));
+      grid.appendChild(mkField("Date of Birth", "Answer", t.dob, (e)=>{ trustees[idx].dob = e.target.value; }));
+      grid.appendChild(mkField("Phone Number", "Answer", t.phone, (e)=>{ trustees[idx].phone = e.target.value; }));
+
+      card.appendChild(top);
+      card.appendChild(grid);
+
+      host.appendChild(card);
+    });
+  }
+
+  function addTrustee() {
+    trustees.push(newTrustee());
+    renderTrustees();
+  }
+
+  function buildTrusteeRowsBBCode() {
+    return trustees.map(t => {
+      const name = esc((t.name || "").trim()) || "Answer";
+      const dob = esc((t.dob || "").trim()) || "Answer";
+      const phone = esc((t.phone || "").trim()) || "Answer";
+      return `[tr]\n  [td]${name}[/td]\n  [td]${dob}[/td]\n  [td]${phone}[/td]\n[/tr]`;
+    }).join("\n");
+  }
+
+  function buildTrusteeSection() {
+    // Only include trustee section if user checks "Trustees Information" AND has at least one trustee row filled or present.
+    const wantsTrustees = $("updTrustees").checked;
+    if (!wantsTrustees) return "";
+
+    const rows = buildTrusteeRowsBBCode();
+    const safeRows = rows && rows.trim()
+      ? rows
+      : `[tr]\n  [td]Answer[/td]\n  [td]Answer[/td]\n  [td]Answer[/td]\n[/tr]`;
+
+    // A compact table suitable for this notification form
+    return `[b]Updated Trustees Information[/b][br][/br]
+[list=none][table]
+[tr]
+  [th]Full Name[/th]
+  [th]Date of Birth[/th]
+  [th]Phone Number[/th]
+[/tr]
+${safeRows}
+[/table][/list]`;
+  }
+
+  // ===== Generate / Copy / Reset =====
+  function generate() {
+    const data = {
+      TITLE: esc($("title").value.trim()),
+      APPLICANT_FULL_NAME: esc($("applicantFullName").value.trim()),
+      DOB: esc($("dob").value.trim()),
+      PHONE: esc($("phone").value.trim()),
+      ADDRESS: esc($("address").value.trim()),
+      FORUM_NAME: esc($("forumName").value.trim()),
+
+      CHARITY_NAME: esc($("charityName").value.trim()),
+      CHARITY_ID: esc($("charityId").value.trim()),
+
+      UPD_PERSONAL: markBox($("updPersonal").checked) + " Personal Information",
+      UPD_STATUS: markBox($("updStatus").checked) + " Charity Status (Active, Defunct)",
+      UPD_NAME: markBox($("updName").checked) + " Charity Name",
+      UPD_ADDRESS: markBox($("updAddress").checked) + " Charity Address",
+      UPD_TRUSTEES: markBox($("updTrustees").checked) + " Trustees Information",
+
+      NEW_DETAILS: esc($("newDetails").value.trim() || "Answer"),
+
+      TRUSTEE_SECTION: buildTrusteeSection(),
+
+      ADDITIONAL: esc($("additional").value.trim() || "Answer"),
+
+      ACK_FULL_NAME: esc($("ackFullName").value.trim() || "Full Name")
+    };
+
+    let out = tpl;
+    for (const [k, v] of Object.entries(data)) out = out.replaceAll(`{{${k}}}`, v);
+    $("output").textContent = out;
+  }
+
+  async function copyOutput() {
+    const text = $("output").textContent || "";
+    if (!text.trim()) return alert("Nothing to copy yet. Click Generate first.");
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("Copied ✅");
+    } catch (e) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      alert("Copied ✅");
+    }
+  }
+
+  function resetAll() {
+    [
+      "title","applicantFullName","dob","phone","address","forumName",
+      "charityName","charityId",
+      "newDetails","additional","ackFullName"
+    ].forEach(id => { const el = $(id); if (el) el.value = ""; });
+
+    ["updPersonal","updStatus","updName","updAddress","updTrustees"].forEach(id => {
+      const el = $(id); if (el) el.checked = false;
+    });
+
+    trustees = [newTrustee()];
+    renderTrustees();
+
+    $("output").textContent = "";
+  }
+
+  $("generateBtn").addEventListener("click", generate);
+  $("copyBtn").addEventListener("click", copyOutput);
+  $("resetBtn").addEventListener("click", resetAll);
+  $("addTrusteeBtn").addEventListener("click", addTrustee);
+
+  // Initialize
+  trustees = [newTrustee()];
+  renderTrustees();
+  generate();
+</script>
+</body>
+</html>
