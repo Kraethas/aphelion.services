@@ -441,11 +441,11 @@
 [br][/br][color=#535a6c][size=150][b]III.  UPDATED INFORMATION[/b][/size][/color][hr][/hr]
  [list=none][i]Mark with [cbc] where applicable.[/i][br][/br]
 [b]3.1 Which of the following information would you like to update?[/b]
-[cb] {{UPD_PERSONAL}}
-[cb] {{UPD_STATUS}}
-[cb] {{UPD_NAME}}
-[cb] {{UPD_ADDRESS}}
-[cb] {{UPD_TRUSTEES}}
+{{UPD_PERSONAL}}
+{{UPD_STATUS}}
+{{UPD_NAME}}
+{{UPD_ADDRESS}}
+{{UPD_TRUSTEES}}
 [hr][/hr]
 [b]3.1.1 Please provide the new details here:[/b]
 {{NEW_DETAILS}}
@@ -466,8 +466,11 @@
     return String(s ?? "").replaceAll("{{", "{ {").replaceAll("}}", "} }");
   }
 
-  function markBox(selected) {
-    return selected ? "X" : "";
+  function cbTag(selected, label) {
+    // If selected → [cbc]
+    // If not → [cb]
+    const tag = selected ? "cbc" : "cb";
+    return `[${tag}] ${label}`;
   }
 
   // ===== Dynamic Trustees =====
@@ -581,11 +584,12 @@ ${safeRows}
       CHARITY_NAME: esc($("charityName").value.trim()),
       CHARITY_ID: esc($("charityId").value.trim()),
 
-      UPD_PERSONAL: markBox($("updPersonal").checked) + " Personal Information",
-      UPD_STATUS: markBox($("updStatus").checked) + " Charity Status (Active, Defunct)",
-      UPD_NAME: markBox($("updName").checked) + " Charity Name",
-      UPD_ADDRESS: markBox($("updAddress").checked) + " Charity Address",
-      UPD_TRUSTEES: markBox($("updTrustees").checked) + " Trustees Information",
+      UPD_PERSONAL: cbTag($("updPersonal").checked, "Personal Information"),
+      UPD_STATUS: cbTag($("updStatus").checked, "Charity Status (Active, Defunct)"),
+      UPD_NAME: cbTag($("updName").checked, "Charity Name"),
+      UPD_ADDRESS: cbTag($("updAddress").checked, "Charity Address"),
+      UPD_TRUSTEES: cbTag($("updTrustees").checked, "Trustees Information"),
+
 
       NEW_DETAILS: esc($("newDetails").value.trim() || "Answer"),
 
