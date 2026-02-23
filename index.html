@@ -173,6 +173,72 @@
       color: var(--gold-soft);
       transform: translateX(4px);
     }
+    /* ===== Enhanced Support Card ===== */
+
+    .support-card {
+      text-align: left;
+    }
+    
+    .support-section p,
+    .commission-section p {
+      margin: 8px 0;
+      line-height: 1.6;
+      color: rgba(212,175,55,0.92);
+    }
+    
+    .routing-box {
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,0.30);
+      background: rgba(0,0,0,0.22);
+      font-size: 18px;
+      letter-spacing: 0.6px;
+      text-align: center;
+    }
+    
+    .support-divider {
+      width: 200px;
+      height: 1px;
+      background: rgba(212,175,55,0.45);
+      margin: 22px auto;
+      opacity: 0.7;
+    }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 12px;
+    }
+    
+    .label {
+      font-size: 12px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(212,175,55,0.75);
+    }
+    
+    .contact-value {
+      margin-top: 6px;
+      font-size: 16px;
+    }
+    
+    .contact-value a {
+      color: var(--gold);
+      text-decoration: underline;
+      transition: 0.2s ease;
+    }
+    
+    .contact-value a:hover {
+      color: var(--gold-soft);
+    }
+    
+    @media (max-width: 820px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 
@@ -234,32 +300,50 @@
     </div>
 
     <!-- ===== Support Box ===== -->
-    <div class="card">
-      <h2>Support Further Development</h2>
+    <div class="card support-card">
+      <h2>Support & Commissioning</h2>
       <div class="divider"></div>
-
-    <div class="support">
-        Voluntary contribution of <strong>Aphelion Solutions</strong> for the simplification of city paperwork.
-        If you would like to support further development and expansion, you can use routing no:
     
-        <div class="routing">030146451</div>
-  
-        <div class="support-divider"></div>
-  
-        If you would like to see another agency’s forms simplified like this, or commission Aphelion for your needs, you may contact us through the following:
-  
-        <div class="contact-info">
-          <div><strong>Business #:</strong> 1900-3505</div>
+      <div class="support-section">
+        <p>
+          This platform is a voluntary contribution of 
+          <strong>Aphelion Solutions</strong> for the simplification of city paperwork.
+        </p>
+    
+        <p>
+          If you would like to support further development and expansion:
+        </p>
+    
+        <div class="routing-box">
+          Routing No: 030146451
+        </div>
+      </div>
+    
+      <div class="support-divider"></div>
+    
+      <div class="commission-section">
+        <p>
+          If you would like to see another agency’s forms simplified,
+          or commission Aphelion for your organizational needs:
+        </p>
+    
+        <div class="contact-grid">
           <div>
-            <strong>Contact Form:</strong>
-            <a href="https://forms.gle/erQ5wgeT4fQYop5p9" target="_blank">
-              https://forms.gle/erQ5wgeT4fQYop5p9
-            </a>
+            <span class="label">Business #</span>
+            <div class="contact-value">1900-3505</div>
+          </div>
+    
+          <div>
+            <span class="label">Contact Form</span>
+            <div class="contact-value">
+              <a href="https://forms.gle/erQ5wgeT4fQYop5p9" target="_blank">
+                Open Commission Form
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 
 </body>
