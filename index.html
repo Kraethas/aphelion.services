@@ -147,6 +147,32 @@
     .contact-info a:hover {
       color: var(--gold-soft);
     }
+    .forms-table {
+      margin-top: 10px;
+    }
+    
+    .forms-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .forms-table td {
+      padding: 10px 0;
+      vertical-align: top;
+      width: 50%;
+    }
+    
+    .forms-table a {
+      color: var(--gold);
+      text-decoration: underline;
+      font-size: 18px;
+      transition: 0.2s ease;
+    }
+    
+    .forms-table a:hover {
+      color: var(--gold-soft);
+      transform: translateX(4px);
+    }
   </style>
 </head>
 
@@ -164,16 +190,46 @@
 
     <h1>Digital Paperwork Simplification project</h1>
 
-    <!-- ===== Forms Box ===== -->
+   <!-- ===== Forms Box ===== -->
     <div class="card">
       <h2>Completed Forms</h2>
       <div class="divider"></div>
-
-      <div class="links">
-        <a href="sbf.html">Small Business Fund Application</a>
-        <a href="charity.html">Charity Registration Application</a>
-        <a href="csn.html">Charity Supplementary Notification</a>
-        <a href="kyc.html">KYC Information</a>
+    
+      <div class="forms-table">
+        <table>
+          <tr>
+            <td>
+              <a href="sbf.html">Small Business Fund Application</a>
+            </td>
+            <td>
+              <!-- Future Form Slot -->
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="charity.html">Charity Registration Application</a>
+            </td>
+            <td>
+              <!-- Future Form Slot -->
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="csn.html">Charity Supplementary Notification</a>
+            </td>
+            <td>
+              <!-- Future Form Slot -->
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="kyc.html">KYC Information</a>
+            </td>
+            <td>
+              <!-- Future Form Slot -->
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
 
