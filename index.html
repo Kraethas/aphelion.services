@@ -11,6 +11,9 @@
       --bg-color: #0f1419;     /* Dark blue/black banner background */
       --gold: #d4af37;         /* Banner gold lettering */
       --gold-soft: #e6c768;
+
+      --panel: rgba(255,255,255,0.04);
+      --panel-border: rgba(212,175,55,0.35);
     }
 
     body {
@@ -36,28 +39,51 @@
 
     /* ===== Content Wrapper ===== */
     .content {
-      padding: 40px 20px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 20px 40px;
     }
 
     h1 {
       font-size: 32px;
-      margin-bottom: 30px;
+      margin: 18px 0 18px;
       letter-spacing: 1px;
     }
 
+    /* ===== Cards (rounded div boxes) ===== */
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      backdrop-filter: blur(6px);
+      margin: 18px auto;
+      text-align: left;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin: 0 0 10px;
+      color: var(--gold);
+      letter-spacing: 0.6px;
+      text-align: center;
+    }
+
     /* ===== Links ===== */
-    a {
+    .links a {
       color: var(--gold);
       text-decoration: underline;
       font-size: 20px;
       display: block;
-      margin: 15px 0;
+      margin: 14px 0;
       transition: 0.2s ease;
+      text-align: center;
     }
 
-    a:hover {
+    .links a:hover {
       color: var(--gold-soft);
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
 
     /* ===== Decorative divider ===== */
@@ -65,8 +91,32 @@
       width: 200px;
       height: 2px;
       background: var(--gold);
-      margin: 25px auto;
+      margin: 14px auto 18px;
       opacity: 0.6;
+    }
+
+    /* ===== Support box text ===== */
+    .support {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(212,175,55,0.92);
+      text-align: center;
+    }
+
+    .support strong {
+      color: var(--gold);
+      letter-spacing: 0.4px;
+    }
+
+    .routing {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(212,175,55,0.30);
+      background: rgba(0,0,0,0.18);
+      font-size: 18px;
+      letter-spacing: 0.6px;
     }
   </style>
 </head>
@@ -83,13 +133,30 @@
 
     <h1>Implemented Forms</h1>
 
-    <div class="divider"></div>
+    <!-- ===== Forms Box ===== -->
+    <div class="card">
+      <h2>Completed Forms</h2>
+      <div class="divider"></div>
 
-    <!-- ===== Links to Forms ===== -->
-    <a href="sbf.html">Small Business Fund Application</a>
-    <a href="charity.html">Charity Registration Application</a>
-    <a href="csn.html">Charity Supplementary Notification</a>
-    <a href="kyc.html">KYC Information</a>
+      <div class="links">
+        <a href="sbf.html">Small Business Fund Application</a>
+        <a href="charity.html">Charity Registration Application</a>
+        <a href="csn.html">Charity Supplementary Notification</a>
+        <a href="kyc.html">KYC Information</a>
+      </div>
+    </div>
+
+    <!-- ===== Support Box ===== -->
+    <div class="card">
+      <h2>Support Further Development</h2>
+      <div class="divider"></div>
+
+      <div class="support">
+        Voluntary contribution of <strong>Aphelion Solutions</strong> for the simplification of city paperwork.
+        If you would like to support further development and expansion, you can use routing no:
+        <div class="routing">030146451</div>
+      </div>
+    </div>
 
   </div>
 
