@@ -24,18 +24,24 @@
       text-align: center;
     }
 
-    /* ===== Top Banner ===== */
-    .banner {
-      width: 100%;
-      text-align: center;
-      background-color: var(--bg-color);
-      padding-top: 10px;
-    }
+   /* ===== Banner aligned with content width ===== */
+.banner-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+}
 
-    .banner img {
-      max-width: 100%;
-      height: auto;
-    }
+.banner {
+  max-width: 980px;
+  width: 100%;
+}
+
+.banner img {
+  width: 100%;
+  height: auto;  /* Maintains aspect ratio */
+  display: block;
+  border-radius: 16px;
+}
 
     /* ===== Content Wrapper ===== */
     .content {
