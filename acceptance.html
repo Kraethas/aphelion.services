@@ -1,249 +1,492 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Personnel File</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personnel File · BBCode Generator</title>
 
-<style>
-:root {
-  --bg-color: #0f1419;
-  --gold: #d4af37;
-  --gold-soft: #e6c768;
-  --blue: #5597D0;
-  --heading: #535a6c;
+  <style>
+    /* ===== Match Site Theme ===== */
+    :root{
+      --bg-color: #0f1419;
+      --gold: #d4af37;
+      --gold-soft: #e6c768;
 
-  --panel: rgba(255,255,255,0.04);
-  --panel-border: rgba(212,175,55,0.35);
-}
+      --panel: rgba(255,255,255,0.04);
+      --panel-border: rgba(212,175,55,0.35);
 
-body {
-  margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  background-color: var(--bg-color);
-  color: var(--gold);
-}
+      --input-bg: rgba(255,255,255,0.06);
+      --input-border: rgba(212,175,55,0.35);
+      --input-text: #f3f3f3;
+      --muted: rgba(212,175,55,0.80);
+    }
 
-.content {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 28px 20px 60px;
-}
+    body{
+      margin:0;
+      background: var(--bg-color);
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      text-align: center;
+    }
 
-.banner-wrap {
-  display: flex;
-  justify-content: center;
-  padding-top: 16px;
-}
+    /* ===== Banner aligned with content width ===== */
+    .banner-wrap{
+      display:flex;
+      justify-content:center;
+      padding-top:16px;
+    }
+    .banner{
+      max-width:980px;
+      width:100%;
+    }
+    .banner a{ display:block; }
+    .banner img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:16px;
+      transition: 0.25s ease;
+      cursor:pointer;
+    }
+    .banner img:hover{
+      filter: brightness(1.08);
+      transform: scale(1.01);
+    }
 
-.banner {
-  max-width: 980px;
-  width: 100%;
-}
+    /* ===== Return link ===== */
+    .return-link{
+      text-align:center;
+      margin: 14px 0 6px;
+    }
+    .return-link a{
+      color: var(--gold);
+      text-decoration: underline;
+      font-size: 16px;
+      transition: 0.2s ease;
+    }
+    .return-link a:hover{ color: var(--gold-soft); }
 
-.banner img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 16px;
-}
+    /* ===== Layout ===== */
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 14px 20px 30px;
+      text-align: left;
+    }
 
-.card {
-  background: var(--panel);
-  border: 1px solid var(--panel-border);
-  border-radius: 16px;
-  padding: 28px;
-  box-shadow: 0 10px 28px rgba(0,0,0,.35);
-  backdrop-filter: blur(6px);
-  margin-top: 20px;
-}
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      backdrop-filter: blur(6px);
+    }
 
-.right-header {
-  text-align: right;
-  color: var(--blue);
-  font-size: 12px;
-  text-decoration: underline;
-}
+    h1{
+      font-size: 22px;
+      margin: 6px 0 14px;
+      letter-spacing: 0.8px;
+      text-align: center;
+      color: var(--gold);
+    }
 
-.center {
-  text-align: center;
-}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .full{ grid-column: 1 / -1; }
 
-.section-title {
-  color: var(--heading);
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 28px;
-}
+    label{
+      display:block;
+      font-size: 12px;
+      margin: 0 0 6px;
+      color: var(--muted);
+      letter-spacing: 0.4px;
+    }
 
-.sub-title {
-  color: var(--blue);
-  font-size: 16px;
-  font-weight: bold;
-}
+    input, textarea, select{
+      width:100%;
+      box-sizing:border-box;
+      padding:10px 12px;
+      border:1px solid var(--input-border);
+      border-radius: 10px;
+      background: var(--input-bg);
+      color: var(--input-text);
+      font-size: 14px;
+      outline: none;
+    }
 
-hr {
-  border: none;
-  height: 1px;
-  background: rgba(212,175,55,0.4);
-  margin: 14px 0;
-}
+    input::placeholder, textarea::placeholder{ color: rgba(255,255,255,0.45); }
+    input:focus, textarea:focus, select:focus{
+      border-color: var(--gold-soft);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+    }
 
-.justify {
-  text-align: justify;
-  line-height: 1.6;
-}
+    textarea{ min-height: 90px; resize: vertical; }
 
-.info-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+    /* ===== Make dropdown choices readable ===== */
+    select option{
+      background: #ffffff;
+      color: #000000;
+    }
+    select option:checked,
+    select option:hover{
+      background: #2f2f2f;
+      color: #ffffff;
+    }
 
-.info-table td {
-  vertical-align: top;
-  padding: 10px;
-}
+    .row{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      justify-content: center;
+    }
 
-.label {
-  font-weight: bold;
-  display: block;
-  margin-top: 10px;
-}
+    button{
+      border: 1px solid rgba(0,0,0,0.0);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--gold);
+      color: #1b1b1b;
+      transition: 0.2s ease;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    button:hover{
+      background: var(--gold-soft);
+      transform: scale(1.02);
+    }
 
-.small-note {
-  font-size: 11px;
-  opacity: 0.8;
-  line-height: 1.4;
-}
+    button.secondary{
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--panel-border);
+    }
+    button.secondary:hover{
+      border-color: var(--gold-soft);
+      background: rgba(212,175,55,0.08);
+      transform: scale(1.02);
+    }
 
-.signature-img {
-  margin-top: 10px;
-  max-width: 200px;
-}
-</style>
+    button.ghost{
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--panel-border);
+      text-decoration: underline;
+    }
+    button.ghost:hover{
+      border-color: var(--gold-soft);
+      background: rgba(212,175,55,0.08);
+      transform: scale(1.02);
+    }
+
+    .note{
+      font-size: 12px;
+      color: rgba(212,175,55,0.85);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .out{ margin-top: 14px; }
+
+    pre{
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(0,0,0,0.40);
+      color: #f3f3f3;
+      border-radius: 14px;
+      padding: 14px;
+      overflow:auto;
+      border: 1px solid rgba(212,175,55,0.25);
+    }
+
+    @media (max-width: 820px){
+      .grid{ grid-template-columns: 1fr; }
+      .wrap{ padding-left: 14px; padding-right: 14px; }
+    }
+  </style>
 </head>
 
 <body>
-
-<div class="content">
-
-  <div class="card">
-
-    <div class="right-header">
-      LOS SANTOS CITY GOVERNMENT<br>
-      OFFICE OF THE CITY OPERATIONS OFFICER<br>
-      CARCER WAY 1, ROCKFORD HILLS, LOS SANTOS, SA
+  <!-- ===== Clickable Top Banner ===== -->
+  <div class="banner-wrap">
+    <div class="banner">
+      <a href="index.html">
+        <img src="https://i.ibb.co/PSMfsZQ/Banner-wide.png" alt="Main Banner">
+      </a>
     </div>
-
-    <hr>
-
-    <div class="center">
-      <img src="https://gov.gta.world/styles/new/theme/images/logo.png" alt="Logo">
-    </div>
-
-    <div class="center" style="margin-top:20px;">
-      <div style="color: var(--heading); font-size:28px; font-weight:bold;">
-        LOS SANTOS CITY GOVERNMENT
-      </div>
-      <hr>
-      <div class="sub-title">PERSONNEL FILE</div>
-    </div>
-
-    <hr>
-
-    <div class="justify">
-      This record consists of information with regards to the employee's current personal contact information, documented disciplinary action history, job performance evaluations, job achievements such as promotions as well as training certificates.
-    </div>
-
-    <table class="info-table">
-      <tr>
-        <td width="70%">
-          <div class="section-title">PERSONAL INFORMATION OF EMPLOYEE</div>
-          <hr>
-
-          <span class="label">Name</span>
-          Firstname Lastname
-
-          <span class="label">Date of Birth</span>
-          DD/MMM/YYYY
-
-          <span class="label">Phone</span>
-          Number
-
-          <span class="label">Email</span>
-          InitialFirstname.lastname@lsgov.us
-
-          <span class="label">Address</span>
-          StreetName Number, Neighborhood, Los Santos, SA
-
-          <span class="label">Department</span>
-          Name of Department
-
-          <span class="label">Position</span>
-          Current Position
-
-          <span class="label">Date of Hire</span>
-          DD/MMM/YYYY
-
-          <span class="label">Badge Number</span>
-          Number
-
-          <span class="label">Bank Routing Number ((For payment))</span>
-          Number
-        </td>
-
-        <td width="30%" class="center">
-          <img src="https://i.imgur.com/tyuSGzy.png" width="150" height="150" alt="Profile Photo">
-        </td>
-      </tr>
-    </table>
-
-    <div class="section-title">TRAINING</div>
-    <hr>
-    <i>No Training Records</i>
-
-    <div class="section-title">AWARDS</div>
-    <hr>
-    <i>No Awards Recorded</i>
-
-    <div class="section-title">DISCIPLINARY</div>
-    <hr>
-    <i>No Disciplinary Records</i>
-
-    <div class="section-title">DECLARATION OF AGREEMENT</div>
-    <hr>
-
-    <div class="center" style="margin-top:20px;">
-      <img src="https://gov-forum.gta.world/styles/new/theme/images/logo.png" alt="Logo">
-    </div>
-
-    <div class="sub-title" style="margin-top:12px;">
-      F.A.O. CITY OF LOS SANTOS<br>
-      BOARD OF PROFESSIONAL CONDUCT & ETHICS<br>
-      CARCER WAY 1, ROCKFORD HILLS, LOS SANTOS, SA
-    </div>
-
-    <p><strong>RE: DECLARATION OF AGREEMENT WITH THE TERMS AND CONDITIONS OF EMPLOYMENT</strong></p>
-
-    <div class="justify">
-      For good and valuable consideration, the receipt and legal sufficiency of which are hereby expressly acknowledged, I, <strong>FULL NAME</strong>, declare that I have read, understood and agree with the rules and regulations governing the employment relation between myself and the City of Los Santos and that I commit to comply with the City's Code of Conduct.
-      <br><br>
-      Signature:
-      <br>
-      <img src="LINK TO SIGNATURE" class="signature-img" alt="Signature">
-      <br>
-      FULL NAME
-    </div>
-
-    <hr>
-
-    <div class="small-note">
-      The contents of this letter and any attachments are intended solely for the addressee as they contain confidential and/or privileged information and may be legally protected from disclosure. If you are not the intended recipient of this message or their agent, or if this message has been addressed to you in error, please immediately alert the sender and then destroy this message and any attachments. If you are not the intended recipient, you are hereby notified that any use, dissemination, copying, or storage of this message or its attachments is strictly prohibited.
-    </div>
-
   </div>
 
-</div>
+  <!-- ===== Return Link ===== -->
+  <div class="return-link">
+    <a href="index.html">← Return to Main Page</a>
+  </div>
 
+  <div class="wrap">
+    <div class="card">
+      <h1>PERSONNEL FILE · BBCode Generator</h1>
+
+      <div class="grid">
+        <div class="full">
+          <label>Employee Name (Firstname Lastname)</label>
+          <input id="empName" placeholder="Firstname Lastname" />
+        </div>
+
+        <div>
+          <label>Date of Birth (DD/MMM/YYYY)</label>
+          <input id="dob" placeholder="DD/MMM/YYYY" />
+        </div>
+
+        <div>
+          <label>Phone</label>
+          <input id="phone" placeholder="Number" />
+        </div>
+
+        <div class="full">
+          <label>Email (as shown in BBCode, without the url tag)</label>
+          <input id="email" placeholder="InitialFirstname.lastname@lsgov.us" />
+        </div>
+
+        <div class="full">
+          <label>Address</label>
+          <input id="address" placeholder="StreetName Number, Neighborhood, Los Santos, SA" />
+        </div>
+
+        <div>
+          <label>Department</label>
+          <input id="dept" placeholder="Name of Department" />
+        </div>
+
+        <div>
+          <label>Position</label>
+          <input id="position" placeholder="Current Position" />
+        </div>
+
+        <div>
+          <label>Date of Hire (DD/MMM/YYYY)</label>
+          <input id="hireDate" placeholder="DD/MMM/YYYY" />
+        </div>
+
+        <div>
+          <label>Badge Number</label>
+          <input id="badge" placeholder="Number" />
+        </div>
+
+        <div class="full">
+          <label>Bank Routing Number (For payment)</label>
+          <input id="routing" placeholder="Number" />
+        </div>
+
+        <div class="full">
+          <label>Profile Photo URL (replaces the 150x150 image)</label>
+          <input id="photoUrl" placeholder="https://i.imgur.com/tyuSGzy.png" />
+        </div>
+
+        <div class="full">
+          <label>Signature Image URL (LINK TO SIGNATURE)</label>
+          <input id="sigUrl" placeholder="https://..." />
+        </div>
+
+        <div class="full">
+          <label>Full Name used in Declaration (defaults to Employee Name if blank)</label>
+          <input id="declName" placeholder="FULL NAME" />
+        </div>
+
+        <div class="full">
+          <label>Training Records (leave blank to keep “No Training Records”)</label>
+          <textarea id="training" placeholder="Optional: paste BBCode lines here, or write plain text."></textarea>
+        </div>
+
+        <div class="full">
+          <label>Awards (leave blank to keep “No Awards Recorded”)</label>
+          <textarea id="awards" placeholder="Optional: paste BBCode lines here, or write plain text."></textarea>
+        </div>
+
+        <div class="full">
+          <label>Disciplinary (leave blank to keep “No Disciplinary Records”)</label>
+          <textarea id="disciplinary" placeholder="Optional: paste BBCode lines here, or write plain text."></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <button id="generateBtn" type="button">Generate</button>
+        <button class="ghost" id="copyBtn" type="button">Copy output</button>
+        <button class="secondary" id="resetBtn" type="button">Reset</button>
+      </div>
+
+      <div class="note">Tip: Empty optional fields keep the original “No Records” lines.</div>
+
+      <div class="out">
+        <label>Output BBCode</label>
+        <pre id="output"></pre>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const tpl =
+`[color=#5597D0][right][u][size=80]LOS SANTOS CITY GOVERNMENT 
+OFFICE OF THE CITY OPERATIONS OFFICER
+CARCER WAY 1, ROCKFORD HILLS, LOS SANTOS, SA[/size][/u][/right][/color][hr][/hr]
+[br][/br]
+[center][img]https://gov.gta.world/styles/new/theme/images/logo.png[/img][/center]
+[br][/br]
+[center][color=#535a6c][size=200][b]LOS SANTOS CITY GOVERNMENT[/b][/size][/color]
+[hr][/hr][size=140][b][color=#5597D0]PERSONNEL FILE[/color][/b][/size][/center][hr][/hr]
+[justify]This record consists of information with regards to the employee's current personal contact information, documented disciplinary action history,  job performance evaluations, job achievements such as promotions as well as training certificates.
+
+[br][/br][/justify]
+[table]
+[tr]
+[td][color=#535a6c][size=130][b]PERSONAL INFORMATION OF EMPLOYEE[/b][/size][/color][hr][/hr]
+
+[b]Name[/b] 
+{{EMP_NAME}}
+
+[b]Date of Birth[/b] 
+{{DOB}}
+
+[b]Phone[/b] 
+{{PHONE}}
+
+[b]Email[/b]
+[url=none]{{EMAIL}}[/url]
+
+[b]Address[/b] 
+{{ADDRESS}}
+
+[b]Department[/b] 
+{{DEPARTMENT}}
+
+[b]Position[/b] 
+{{POSITION}}
+
+[b]Date of Hire[/b] 
+{{HIRE_DATE}}
+
+[b]Badge Number[/b] 
+{{BADGE}}
+
+[b]Bank Routing Number ((For payment))[/b] 
+{{ROUTING}}
+
+[/td]
+[td][center][img size=150x150]{{PHOTO_URL}}[/img][/center][/td]
+[/tr]
+[/table]
+
+[color=#535a6c][size=130][b]TRAINING[/b][/size][/color][hr][/hr]
+
+{{TRAINING_BLOCK}}
+
+[color=#535a6c][size=130][b]AWARDS[/b][/size][/color][hr][/hr]
+
+{{AWARDS_BLOCK}}
+
+[color=#535a6c][size=130][b]DISCIPLINARY[/b][/size][/color][hr][/hr]
+
+{{DISCIPLINARY_BLOCK}}
+
+[br][/br]
+[color=#535a6c][b][size=130]DECLARATION OF AGREEMENT[/size][/b][/color][hr][/hr]
+[br][/br]
+
+[br][/br]
+[center][img]https://gov-forum.gta.world/styles/new/theme/images/logo.png[/img][/center]
+[color=#5597D0][u][size=80] F.A.O. CITY OF LOS SANTOS
+BOARD OF PROFESSIONAL CONDUCT & ETHICS
+CARCER WAY 1, ROCKFORD HILLS, LOS SANTOS, SA[/size][/u][/color]
+[br][/br]
+[b]RE: DECLARATION OF AGREEMENT WITH THE TERMS AND CONDITIONS OF EMPLOYMENT[/b]
+[br][/br]
+[justify]For good and valuable consideration, the receipt and legal sufficiency of which are hereby expressly acknowledged, I, [b]{{DECL_NAME}}[/b], declare that I have read, understood and agree with the rules and regulations governing  the [url=https://gov.gta.world/viewtopic.php?f=400&t=1732]employment relation[/url] between myself and the City of Los Santos and that I commit to comply with the City's [url=https://gov.gta.world/viewforum.php?f=400]Code of Conduct[/url].
+
+Signature:
+
+[img]{{SIG_URL}}[/img]
+{{DECL_NAME}}[/justify]
+
+[hr][/hr](/code)
+[br][/br][hr][/hr]
+[size=70]The contents of this letter and any attachments are intended solely for the addressee as they contain confidential and/or privileged information and may be legally protected from disclosure. If you are not the intended recipient of this message or their agent, or if this message has been addressed to you in error, please immediately alert the sender and then destroy this message and any attachments. If you are not the intended recipient, you are hereby notified that any use, dissemination, copying, or storage of this message or its attachments is strictly prohibited.[/size]
+[hr][/hr]`;
+
+  const $ = (id) => document.getElementById(id);
+
+  function esc(s) {
+    return String(s ?? "").replaceAll("{{", "{ {").replaceAll("}}", "} }");
+  }
+
+  function blockOrDefault(text, fallbackLine) {
+    const v = (text ?? "").trim();
+    return v ? esc(v) : fallbackLine;
+  }
+
+  function generate() {
+    const empName = $("empName").value.trim();
+    const declName = $("declName").value.trim() || empName;
+
+    const data = {
+      EMP_NAME: esc(empName),
+      DOB: esc($("dob").value.trim()),
+      PHONE: esc($("phone").value.trim()),
+      EMAIL: esc($("email").value.trim()),
+      ADDRESS: esc($("address").value.trim()),
+      DEPARTMENT: esc($("dept").value.trim()),
+      POSITION: esc($("position").value.trim()),
+      HIRE_DATE: esc($("hireDate").value.trim()),
+      BADGE: esc($("badge").value.trim()),
+      ROUTING: esc($("routing").value.trim()),
+      PHOTO_URL: esc($("photoUrl").value.trim() || "https://i.imgur.com/tyuSGzy.png"),
+      SIG_URL: esc($("sigUrl").value.trim() || "LINK TO SIGNATURE"),
+      DECL_NAME: esc(declName),
+
+      TRAINING_BLOCK: blockOrDefault($("training").value, "[i]No Training Records[/i]"),
+      AWARDS_BLOCK: blockOrDefault($("awards").value, "[i]No Awards Recorded[/i]"),
+      DISCIPLINARY_BLOCK: blockOrDefault($("disciplinary").value, "[i]No Disciplinary Records[/i]")
+    };
+
+    let out = tpl;
+    for (const [k, v] of Object.entries(data)) out = out.replaceAll(`{{${k}}}`, v);
+    $("output").textContent = out;
+  }
+
+  async function copyOutput() {
+    const text = $("output").textContent || "";
+    if (!text.trim()) return alert("Nothing to copy yet. Click Generate first.");
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("Copied ✅");
+    } catch (e) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      alert("Copied ✅");
+    }
+  }
+
+  function resetAll() {
+    [
+      "empName","dob","phone","email","address","dept","position",
+      "hireDate","badge","routing","photoUrl","sigUrl","declName",
+      "training","awards","disciplinary"
+    ].forEach(id => { const el = $(id); if (el) el.value = ""; });
+
+    $("output").textContent = "";
+  }
+
+  $("generateBtn").addEventListener("click", generate);
+  $("copyBtn").addEventListener("click", copyOutput);
+  $("resetBtn").addEventListener("click", resetAll);
+
+  generate();
+</script>
 </body>
 </html>
